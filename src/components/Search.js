@@ -3,10 +3,41 @@ import axios from 'axios'
 import Youtube from '../api/Youtube'
 const Search = () =>{
     const [searchTerm, setSearchTerm] = useState('programming')
+    const [decoratedTerm, setDecoratedTerm] = useState(searchTerm)
     const [results, setResults] = useState([])
     const [time, setTime] = useState(1)
     console.log('rendering',searchTerm);
+
+    // useEffect(()=>{
+    //     console.log('both',decoratedTerm, searchTerm);
+    //     const timeoutid = setTimeout(()=>{
+    //         console.log('time out');
+    //         setDecoratedTerm(searchTerm)
+    //     },1000)
+    //     return ()=>{
+    //         clearTimeout(timeoutid)
+    //     }
+        
+    // },[searchTerm])
+
+    // useEffect(()=>{
+    //     const search = async ()=>{
+    //         var {data} = await axios.get('https://en.wikipedia.org/w/api.php',{
+    //             params:{
+    //                 action:'query',
+    //                 list:'search',
+    //                 format:'json',
+    //                 origin:'*',
+    //                 srsearch:searchTerm,
+    //             }
+    //         })
+    //         setResults(data.query.search)
+    //     }
+    //     console.log('dec', decoratedTerm);
+    //     search()
+    // },[decoratedTerm])
     
+    // Use the above two useEffects or the below useEffect (both work almost same)
     useEffect(()=>{
         //1 (async ()=>{
         //     await axios.get('')
