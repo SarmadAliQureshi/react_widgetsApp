@@ -2,9 +2,10 @@ import React, {useState, useEffect, useCallback} from 'react'
 import axios from 'axios'
 import Youtube from '../api/Youtube'
 const Search = () =>{
-    const [searchTerm, setSearchTerm] = useState('')
+    const [searchTerm, setSearchTerm] = useState('programming')
     const [results, setResults] = useState([])
-    console.log('rendering');
+    const [time, setTime] = useState(1)
+    console.log('rendering',searchTerm);
     
     useEffect(()=>{
         //1 (async ()=>{
@@ -25,17 +26,33 @@ const Search = () =>{
             })
             setResults(data.query.search)
         }
-        // console.log(results);
-        if(searchTerm){
-        search()
+        // To search first term instantly
+        if (searchTerm &&! results.length){
+            search()
+        }
+        
+        const timeoutId = setTimeout(()=>{
+            if(searchTerm){
+                search()
+            console.log('Time out id',timeoutId)
+            setTime(timeoutId)
+        }
+        },5000)
+        
+        return ()=>{
+            console.log('clean up',timeoutId , searchTerm);
+            clearTimeout(timeoutId)
         }
         // console.log(results);
     },[searchTerm])
 
     const renderedResults = results.map((result)=>{
-        console.log(result);
+        // console.log(result);
         return (
         <div className="item">
+            <div className="right floated content">
+                <a className="ui button" href={`https://en.wikipedia.org?curid=${result.pageid}`}> Go</a>
+            </div>
             <div className="content">
                 <div className="header">
                     {result.title}
@@ -48,9 +65,7 @@ const Search = () =>{
     })
 
     function onInput(e){
-
         setSearchTerm(e.target.value)
-        // console.log('inp',e);
     }
     return(
         <div>
