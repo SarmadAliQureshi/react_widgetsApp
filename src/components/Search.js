@@ -28,7 +28,7 @@ const Search = () =>{
     //                 list:'search',
     //                 format:'json',
     //                 origin:'*',
-    //                 srsearch:searchTerm,
+    //                 srsearch:decoratedTerm,
     //             }
     //         })
     //         setResults(data.query.search)
@@ -61,18 +61,20 @@ const Search = () =>{
         if (searchTerm &&! results.length){
             search()
         }
+        else{
         
-        const timeoutId = setTimeout(()=>{
-            if(searchTerm){
-                search()
-            console.log('Time out id',timeoutId)
-            setTime(timeoutId)
-        }
-        },5000)
-        
-        return ()=>{
-            console.log('clean up',timeoutId , searchTerm);
-            clearTimeout(timeoutId)
+            const timeoutId = setTimeout(()=>{
+                if(searchTerm){
+                    search()
+                console.log('Time out id',timeoutId)
+                setTime(timeoutId)
+            }
+            },2000)
+            
+            return ()=>{
+                console.log('clean up',timeoutId , searchTerm);
+                clearTimeout(timeoutId)
+            }
         }
         // console.log(results);
     },[searchTerm])
